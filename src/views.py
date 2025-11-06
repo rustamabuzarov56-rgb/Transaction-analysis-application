@@ -12,10 +12,16 @@ def load_data(file_path):
 
 
 def filter_data(df, start_date, end_date):
-    """Фильтрация данных по заданному диапазону дат"""
+    # Преобразуем столбец дат в тип datetime
+    df['Дата операции'] = pd.to_datetime(df['Дата операции'])
+
+    # Преобразуем начальную и конечную даты в формат datetime
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+
+    # Проводим фильтрацию
     mask = (df['Дата операции'] >= start_date) & (df['Дата операции'] <= end_date)
-    filtered_df = df.loc[mask]
-    return filtered_df
+    return df.loc[mask]
 
 def calculate_total_spent(filtered_df: pd.DataFrame) -> dict:
     """
